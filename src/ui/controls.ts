@@ -115,6 +115,8 @@ export class Controls {
     let field: Field | null = null;
     if (state.drawing.type === "food") {
       field = this.garden.foodField;
+    } else if (state.drawing.type === "poison") {
+      field = this.garden.poisonField;
     } else if (state.drawing.type === "rock") {
       field = this.garden.rockField;
       this.wasDrawingRock = true;

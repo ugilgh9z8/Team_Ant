@@ -31,11 +31,13 @@ export function randomizeGarden(options: GardenGeneratorOptions) {
   if (options.horizontalMirror) {
     applyHorizontalMirror(options.garden.rockField);
     applyHorizontalMirror(options.garden.foodField);
+    applyHorizontalMirror(options.garden.poisonField);
   }
 
   if (options.verticalMirror) {
     applyVerticalMirror(options.garden.rockField);
     applyVerticalMirror(options.garden.foodField);
+    applyVerticalMirror(options.garden.poisonField);
   }
 }
 
@@ -73,6 +75,7 @@ function generateFood(
   const foodNoise = new ComplexNoise(foodScales, Math.random().toString());
 
   const food = options.garden.foodField;
+  const poison = options.garden.poisonField;
   const rock = options.garden.rockField;
 
   for (let x = 0; x < food.width; x++) {

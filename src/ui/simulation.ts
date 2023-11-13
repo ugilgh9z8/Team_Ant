@@ -120,6 +120,7 @@ export class Simulation {
         width: this.garden.width,
         height: this.garden.height,
         foodField: compressFloat32Array(this.garden.foodField.data),
+        poisonField: compressFloat32Array(this.garden.poisonField.data),
         rockField: compressFloat32Array(this.garden.rockField.data, {
           zeroOrOne: true,
         }),
@@ -150,6 +151,7 @@ export class Simulation {
       data.garden.height
     );
     decompressFloat32Array(data.garden.foodField, this.garden.foodField.data);
+    decompressFloat32Array(data.garden.poisonField, this.garden.poisonField.data);
     decompressFloat32Array(data.garden.rockField, this.garden.rockField.data);
 
     beautifyRocks(this.garden.rockField);

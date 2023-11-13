@@ -6,7 +6,7 @@ import { getDistanceBetween } from "@/utils";
 import type { Ant } from "./ant";
 import { FIELD_CELL_SIZE } from "./const";
 import type { Corpse } from "./corpse";
-import { Field, FoodField, RockField } from "./field";
+import { Field, FoodField, PoisonField, RockField } from "./field";
 import { Colony } from "./colony";
 import { gardenSettings, simulationSettings, visualSettings } from "./settings";
 
@@ -17,6 +17,7 @@ export class Garden {
 
   foodField: FoodField;
   rockField: RockField;
+  poisonField: PoisonField;
   antsField: Field;
 
   antSlowTickOffset = 0;
@@ -56,6 +57,7 @@ export class Garden {
 
     this.foodField = new FoodField(this);
     this.rockField = new RockField(this);
+    this.poisonField = new PoisonField(this);
     this.antsField = new Field(this, FIELD_CELL_SIZE * 6);
 
     for (let i = 0; i < this.antsField.data.length; i++) {
@@ -268,6 +270,10 @@ export class Garden {
         if (colony.toFoodField.data[i] > 0) {
           colony.toFoodField.data[i] *= dissipation;
           colony.toFoodField.maxValues.data[i] *= dissipation;
+        }
+        if (colony.toPoisonField.data[i] > 0) {
+          colony.toPoisonField.data[i] *= dissipation;
+          colony.toPoisonField.maxValues.data[i] *= dissipation;
         }
         if (colony.toHomeField.data[i] > 0) {
           colony.toHomeField.data[i] *= dissipation;

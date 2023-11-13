@@ -10,7 +10,7 @@ import {
 import { simulationStats } from "@/ui/stats";
 import { transferFields } from "@/utils";
 
-export type DrawingType = "food" | "rock" | null;
+export type DrawingType = "food" | "rock" | "poison" | null;
 
 const _state = {
   simulationSettings,

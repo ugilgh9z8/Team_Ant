@@ -169,6 +169,14 @@ export class FoodField extends Field {
   }
 }
 
+export class PoisonField extends Field {
+  protected drawPixel(index: number, value: number) {
+    if (!this.garden.rockField.data[index]) {
+      this.data[index] = value;
+    }
+  }
+}
+
 export class RockField extends Field {
   protected drawPixel(index: number, value: number) {
     this.data[index] = value;

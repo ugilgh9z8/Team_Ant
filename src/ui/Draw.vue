@@ -31,6 +31,13 @@ function toggleDraw(type: DrawingType) {
     </button>
     <button
       class="btn grow"
+      :class="{ 'btn-primary': state.drawing.type === 'poison' }"
+      :onclick="() => toggleDraw('poison')"
+    >
+      Draw poison
+    </button>
+    <button
+      class="btn grow"
       :class="{ 'btn-primary': state.drawing.type === 'rock' }"
       :onclick="() => toggleDraw('rock')"
     >

@@ -90,6 +90,9 @@ export class PheromonesLayer {
         this.toFood.bindData(this.trackedColony.toFoodField.data);
         this.toFoodMax.bindData(this.trackedColony.toFoodField.maxValues.data);
 
+        this.toFood.bindData(this.trackedColony.toFoodField.data);
+        this.toFoodMax.bindData(this.trackedColony.toFoodField.maxValues.data);
+
         this.toHome.bindData(this.trackedColony.toHomeField.data);
         this.toHomeMax.bindData(this.trackedColony.toHomeField.maxValues.data);
 

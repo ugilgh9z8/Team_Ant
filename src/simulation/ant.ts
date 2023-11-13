@@ -8,6 +8,7 @@ import type { PheromoneField } from "./pheromone";
 import { simulationSettings, type FieldSampler } from "./settings";
 import { Corpse } from "./corpse";
 import { FIELD_CELL_SIZE } from "./const";
+import { PoisonField } from "./field";
 
 export const enum AntMode {
   toFood,
@@ -69,6 +70,9 @@ export class Ant {
 
   // The amount of food the ant is carrying.
   food = 0;
+
+  // The amount of poison the ant has.
+  poison = 0;
 
   // Pheromone disperse props.
   // Dispertion is process of removing a pheromone. If e.g. a source of food is depleted, the ants disperse the toFood pheromone to force other ants to look for a new source.
@@ -371,7 +375,8 @@ export class Ant {
       if (this.food > 0) {
         this.sprite.texture = resources.atlas!.textures["ant-with-food.png"];
         this.pheromoneToDrop = this.colony.toFoodField;
-      } else {
+      } 
+      else {
         this.disperseToFood();
       }
     } else {
@@ -489,6 +494,7 @@ export class Ant {
     const [spriteX, spriteY] = [this.sprite.x, this.sprite.y];
     const rockData = this.colony.garden.rockField.data;
     const foodData = this.colony.garden.foodField.data;
+    const poisonData = this.colony.garden.poisonField.data;
     const fieldData = field.maxValues.data;
     const freedom = 1 / this.colony.freedom;
 
@@ -512,6 +518,11 @@ export class Ant {
           break;
         }
 
+        if (this.mode === AntMode.toFood && poisonData[index]) {
+          total -= 10000;
+          break;
+        }
+
         // This power below is slow, 20% of simulation time :(
         // It greatly improves ants behavior though.
         total += fieldData[index] ** freedom;
@@ -532,12 +543,19 @@ export class Ant {
     }
 
     const foodField = this.colony.garden.foodField;
+    const poisonField = this.colony.garden.poisonField;
     const index = foodField.getIndex(this.sprite.x, this.sprite.y);
     const food = foodField.data[index];
+    const poison = poisonField.data[index]; 
     if (food > 0) {
       foodField.data[index]--;
       this.colony.foodHereField.data[index] = TO_FOOD_DISPERSE_MARKER_STRENGTH;
       this.food = 1;
+      this.enterToHome();
+    } else if (poison > 0){
+      poisonField.data[index]--;
+      this.colony.foodHereField.data[index] = TO_FOOD_DISPERSE_MARKER_STRENGTH;
+      this.poison = 1;
       this.enterToHome();
     } else if (this.colony.foodHereField.data[index] > 0) {
       this.disperseToFood();

@@ -11,6 +11,7 @@ import { gardenSettings } from "./settings";
 
 const initialColonyStats = {
   food: 0,
+  poison: 0,
   totalFood: 0,
 
   livingAnts: 0,
@@ -91,6 +92,7 @@ export class Colony {
   corpseColor: number;
 
   toFoodField: PheromoneField;
+  toPoisonField: PheromoneField;
   toHomeField: PheromoneField;
   toEnemyField: PheromoneField;
   foodHereField: PheromoneField;
@@ -108,6 +110,7 @@ export class Colony {
     this.bitId = getFirstUnusedBitId(this.garden.colonies);
 
     this.toFoodField = new PheromoneField(this.garden);
+    this.toPoisonField = new PheromoneField(this.garden);
     this.toHomeField = new PheromoneField(this.garden);
     this.toEnemyField = new PheromoneField(this.garden);
     this.foodHereField = new PheromoneField(this.garden);
@@ -280,6 +283,7 @@ export class Colony {
       antsLimit: this.antsLimit,
       antsToRelease: Math.max(this.antsToRelease, this.ants.length),
       food: this.stats.food,
+      poison: this.stats.poison,
       aggresiveness: this.aggresiveness,
       antsMeanEnergy: this.antsMeanEnergy,
       freedom: this.freedom,
